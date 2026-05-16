@@ -45,6 +45,9 @@ jobs:
       - uses: hashicorp/setup-terraform@v3
       - name: Terraform Init
         run: terraform -chdir=terraform init
+      - name: Terraform Destroy (cleanup previous state)
+        run: terraform -chdir=terraform destroy -auto-approve
+        continue-on-error: true
       - name: Terraform Plan
         run: terraform -chdir=terraform plan
       - name: Terraform Apply
