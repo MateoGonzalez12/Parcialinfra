@@ -10,7 +10,7 @@ export DB_USER="${db_user}"
 export DB_PASSWORD="${db_password}"
 
 # Clonar app desde GitHub (ajusta la URL)
-git clone https://github.com/TU_USUARIO/TU_REPO.git /app
+git clone https://github.com/MateoGonzalez12/Parcialinfra.git /app
 cd /app/app
 
 # Crear tabla de ejemplo
