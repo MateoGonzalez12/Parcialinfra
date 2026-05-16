@@ -46,8 +46,11 @@ jobs:
       - name: Terraform Init
         run: terraform -chdir=terraform init
       - name: Terraform Destroy (cleanup previous state)
-        run: terraform -chdir=terraform destroy -auto-approve
-        continue-on-error: true
+        run: |
+          cd terraform
+          terraform state list | xargs -I {} terraform state rm {} || true
+          terraform destroy -auto-approve || true
+          cd ..
       - name: Terraform Plan
         run: terraform -chdir=terraform plan
       - name: Terraform Apply
