@@ -14,7 +14,7 @@ export const options = {
   },
 };
 
-const ALB_URL = __ENV.ALB_URL || 'http://TU-ALB-DNS';
+const ALB_URL = __ENV.ALB_URL || 'http://flask-app-alb-463011915.us-east-1.elb.amazonaws.com';
 
 export default function () {
   const r = http.get(`${ALB_URL}/health`);
