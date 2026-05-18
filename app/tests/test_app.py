@@ -22,7 +22,12 @@ def test_health(client):
 # ── Test 2: /status simula conexión exitosa a BD ──
 def test_status_ok(client):
     with patch('app.get_db') as mock_db:
-        mock_db.return_value = MagicMock()  # simula que la BD responde
+        mock_conn = MagicMock()
+        mock_cursor = MagicMock()
+        mock_cursor.fetchone.return_value = ['PostgreSQL 15.0']
+        mock_conn.cursor.return_value = mock_cursor
+        mock_db.return_value = mock_conn
+
         r = client.get('/status')
         assert r.status_code == 200
         data = r.get_json()
@@ -47,5 +52,6 @@ def test_get_items(client):
         r = client.get('/api/items')
         assert r.status_code == 200
         data = r.get_json()
-        assert len(data) == 2
-        assert data[0]['nombre'] == 'item-demo'
+        assert data['count'] == 2
+        assert len(data['items']) == 2
+        assert data['items'][0]['nombre'] == 'item-demo'
