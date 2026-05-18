@@ -2,7 +2,7 @@
 resource "aws_vpc" "main" {
   cidr_block           = "10.0.0.0/16"
   enable_dns_hostnames = true
-  tags = { Name = "${var.project_name}-vpc" }
+  tags                 = { Name = "${var.project_name}-vpc" }
 }
 
 # ── Subnets públicas (ALB) ────────────────────────
@@ -11,14 +11,14 @@ resource "aws_subnet" "public_a" {
   cidr_block              = "10.0.1.0/24"
   availability_zone       = "${var.aws_region}a"
   map_public_ip_on_launch = true
-  tags = { Name = "${var.project_name}-pub-a" }
+  tags                    = { Name = "${var.project_name}-pub-a" }
 }
 resource "aws_subnet" "public_b" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = "10.0.2.0/24"
   availability_zone       = "${var.aws_region}b"
   map_public_ip_on_launch = true
-  tags = { Name = "${var.project_name}-pub-b" }
+  tags                    = { Name = "${var.project_name}-pub-b" }
 }
 
 # ── Subnets privadas (EC2) ────────────────────────
@@ -26,13 +26,13 @@ resource "aws_subnet" "private_a" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.3.0/24"
   availability_zone = "${var.aws_region}a"
-  tags = { Name = "${var.project_name}-priv-a" }
+  tags              = { Name = "${var.project_name}-priv-a" }
 }
 resource "aws_subnet" "private_b" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.4.0/24"
   availability_zone = "${var.aws_region}b"
-  tags = { Name = "${var.project_name}-priv-b" }
+  tags              = { Name = "${var.project_name}-priv-b" }
 }
 
 # ── Subnets privadas (RDS) ────────────────────────
@@ -40,13 +40,13 @@ resource "aws_subnet" "db_a" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.5.0/24"
   availability_zone = "${var.aws_region}a"
-  tags = { Name = "${var.project_name}-db-a" }
+  tags              = { Name = "${var.project_name}-db-a" }
 }
 resource "aws_subnet" "db_b" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.6.0/24"
   availability_zone = "${var.aws_region}b"
-  tags = { Name = "${var.project_name}-db-b" }
+  tags              = { Name = "${var.project_name}-db-b" }
 }
 
 # ── Internet Gateway + Route Table ───────────────
