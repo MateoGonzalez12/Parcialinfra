@@ -262,7 +262,25 @@ resource "aws_instance" "ec2_b" {
 
   tags = { Name = "${var.project_name}-ec2-b" }
 }
+#############################################
+#         S3 BACKEND PARA TERRAFORM STATE   #
+#############################################
 
+resource "aws_s3_bucket" "terraform_state" {
+  bucket        = "flask-app-terraform-state-${random_id.suffix.hex}"
+  force_destroy = true
+}
+
+resource "random_id" "suffix" {
+  byte_length = 4
+}
+
+resource "aws_s3_bucket_versioning" "state_versioning" {
+  bucket = aws_s3_bucket.terraform_state.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
 #############################################
 #       ATTACH EC2 TO TARGET GROUP          #
 #############################################
